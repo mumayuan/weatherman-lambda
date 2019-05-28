@@ -33,9 +33,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> {
     private static String bucket_name = "mq2lambda";
 
-    static {
-        System.out.println("----------System.getenv(accesskey------->" + System.getenv("accesskey"));
-    }
+
 
     BasicAWSCredentials awsCreds = new BasicAWSCredentials(
             "xxx", "yyy"
@@ -51,7 +49,6 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
         try {
 
 
-            // final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
             Map<String, String> map = input.getQueryStringParameters();
 
             String location = "mq2"; //the default for testing
@@ -84,7 +81,6 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
 
                 while ((inputLine = in.readLine()) != null) {
                     content.append(inputLine);
-                    //System.out.println(">"+inputLine);
                 }
                 in.close();
 
@@ -168,30 +164,27 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
         }
     }
 
+
+    /**
+     * in order to retrieve icons from accuweather,
+     * convert icon number into two digits string, where single digit is padded with 0
+     * @param icon
+     * @return
+     */
     private String getIconText(int icon) {
 
         String iconPrefix = icon < 10 ? "0" : "";
         return iconPrefix + icon;
     }
 
-    private static String getParamsString(Map<String, String> params)
-            throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-            result.append("&");
-        }
-
-        String resultString = result.toString();
-        return resultString.length() > 0
-                ? resultString.substring(0, resultString.length() - 1)
-                : resultString;
-    }
 
 
+    /**
+     * read file from the s3 bucket
+     * @param s3
+     * @param fileName
+     * @return
+     */
     private String readS3File(AmazonS3 s3, String fileName) {
         String ret = "";
         try {
