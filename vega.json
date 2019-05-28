@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+   "width": 300,
+  "height": 150,
+ "title": "Temperature next 5 days",
+  "description": "Temperature trends in next 5 days.",
+ "data": {
+     "values":
+       [
+       
+{"day":"day0", "category": "high", "value": high0},
+{"day":"day0", "category": "low", "value": low0},
+{"day":"day1", "category": "high", "value": high1},
+{"day":"day1", "category": "low", "value": low1},
+{"day":"day2", "category": "high", "value": high2},
+{"day":"day2", "category": "low", "value": low2},
+{"day":"day3", "category": "high", "value": high3},
+{"day":"day3", "category": "low", "value": low3},
+{"day":"day4", "category": "high", "value": high4},
+{"day":"day4", "category": "low", "value": low4}
+     ]
+  },
+
+  "mark": {
+    "type": "line",
+    "point": {
+      "filled": false,
+      "fill": "white"
+    }
+  },
+  "encoding": {
+    "x": {"field": "day", "type": "ordinal", "title":""},
+    "y": {"dayggregate":"mean", "field": "value", "type": "quantitative", "title":"fahrenheit"},
+    "color": {
+      "field": "category", "type": "nominal", 
+              "scale": {"range": ["orange", "gray"], "type": "linear"}
+
+  }
+  
+  }
+}
+
